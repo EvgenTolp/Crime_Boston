@@ -29,16 +29,16 @@ object BostonCrimesMap extends App {
 
   /// /// /// Посчитаем и удалим дубликаты:
 
-    val commonDf = crimeFacts.count()
-    println(s"Total count: $commonDf") // Total 319073
+  val commonDf = crimeFacts.count()
+  println(s"Total count: $commonDf") // Total 319073
 
   val distinctDF = crimeFacts.distinct()
-    println(s"Distinct count: $distinctDF").count())
-    //distinctDF.show(false)  // Distinct count: 319050
+  println( s"Distinct count: $distinctDF")
+  //distinctDF.show(false)  // Distinct count: 319050
 
-    val cleanDf = crimeFacts.dropDuplicates()
-    println("After drop distinct count: "+cleanDf.count())
-    //df2.show(false) //After: 319050 -
+  val cleanDf = crimeFacts.dropDuplicates()
+  println(s"After drop distinct count:  $cleanDf")
+  //df2.show(false) //After: 319050
 
 
   // Построим агрегат:
