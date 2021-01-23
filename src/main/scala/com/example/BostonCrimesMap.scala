@@ -6,25 +6,25 @@ import org.apache.spark.sql.functions.broadcast
 object BostonCrimesMap extends App {
 
   import org.apache.log4j.{Level, Logger}
-  Logger.getLogger( "org" ).setLevel( Level.OFF )
+  Logger.getLogger("org").setLevel(Level.OFF)
 
     val spark = SparkSession.builder()
-      .appName( "HelloSpark" )
-      .master( "local[*]" )
+      .appName("HelloSpark")
+      .master("local[*]")
       .getOrCreate()
 
     val crimeFacts = spark //датасет 1
       .read
-      .option( "header", "true" )
-      .option( "inferSchema", "true" )
+      .option("header", "true")
+      .option("inferSchema", "true")
       .csv(args(0))  //"/Users/irina/Boston/src/base/crime.csv"
 
   //if (args.length != 3) Some(args(3)) else None
 
   val offense_codes = spark //датасет 2
       .read
-      .option( "header", "true")
-      .option( "inferSchema", "true" )
+      .option("header", "true")
+      .option("inferSchema", "true")
       .csv(args(1)) //"/Users/irina/Boston/src/base/offense_codes.csv"
 
   /// /// /// Посчитаем и удалим дубликаты:
@@ -43,7 +43,7 @@ object BostonCrimesMap extends App {
 
   // Построим агрегат:
 
-  offense_codes.createOrReplaceTempView( "offenseCodes" )
+  offense_codes.createOrReplaceTempView("offenseCodes")
 
     val offenseCodes = spark.sql(
       """
@@ -99,9 +99,9 @@ object BostonCrimesMap extends App {
       FROM
       robberyStatsTable
       GROUP BY DISTRICT
-      """ )
+      """)
 
-    val finale = number.join( number2, Seq("DISTRICT")).join(number3, Seq("DISTRICT") )
+    val finale = number.join(number2, Seq("DISTRICT")).join(number3, Seq("DISTRICT"))
     finale.show(false)
     finale.repartition(1).write.format("parquet").mode("append").save(args(2) + "/result.parquet")
 
