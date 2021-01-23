@@ -33,13 +33,12 @@ object BostonCrimesMap extends App {
   println(s"Total count: $commonDf") // Total 319073
 
   val distinctDF = crimeFacts.distinct()
-  println(s"Distinct count: $distinctDF")
+  println("Distinct count: " +distinctDF.count())
   //distinctDF.show(false)  // Distinct count: 319050
 
   val cleanDf = crimeFacts.dropDuplicates()
-  println(s"After drop distinct count: $cleanDf")
+  println("After drop distinct count: " +cleanDf.count())
   //df2.show(false) //After: 319050
-
 
   // Построим агрегат:
 
