@@ -27,6 +27,11 @@ object BostonCrimesMap extends App {
       .option("inferSchema", "true")
       .csv(args(1)) //"/Users/irina/Boston/src/base/offense_codes.csv"
 
+  
+  if (args.length != 3) {         //проверка кол-ва агрументов при вызове
+    println("Неправильный возов")
+    sys.exit(-1) }
+  
   /// /// /// Посчитаем и удалим дубликаты:
 
   val commonDf = crimeFacts.count()
