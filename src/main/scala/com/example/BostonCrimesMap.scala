@@ -13,24 +13,22 @@ object BostonCrimesMap extends App {
       .master("local[*]")
       .getOrCreate()
 
+    if (args.length != 3) {         //проверка кол-ва агрументов при вызове
+      println("Неправильный возов")
+      sys.exit(-1) }
+  
     val crimeFacts = spark //датасет 1
       .read
       .option("header", "true")
       .option("inferSchema", "true")
       .csv(args(0))  //"/Users/irina/Boston/src/base/crime.csv"
 
-  //if (args.length != 3) Some(args(3)) else None
-
-  val offense_codes = spark //датасет 2
+   val offense_codes = spark //датасет 2
       .read
       .option("header", "true")
       .option("inferSchema", "true")
       .csv(args(1)) //"/Users/irina/Boston/src/base/offense_codes.csv"
 
-  
-  if (args.length != 3) {         //проверка кол-ва агрументов при вызове
-    println("Неправильный возов")
-    sys.exit(-1) }
   
   /// /// /// Посчитаем и удалим дубликаты:
 
